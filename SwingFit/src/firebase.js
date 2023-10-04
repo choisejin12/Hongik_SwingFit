@@ -111,3 +111,40 @@ export const updateInformation = async (newinformation) => {
   }); 
 
 };
+
+const uploadBoardImage = async uri => {
+  if (uri.startsWith('https')) {
+    return uri;
+  }
+
+  const response = await fetch(uri);
+  const blob = await response.blob();
+
+  const { uid } = auth.currentUser;
+  const storage = getStorage(app);
+  const storageRef = ref(storage, `/Board/${uid}/photo.png`);
+  await uploadBytes(storageRef, blob, {
+    contentType: 'image/png',
+  });
+
+  return await getDownloadURL(storageRef);
+};
+
+
+export const createBoard = async ({title,Desc,category,photo}) => {
+  const BoardCollection = collection(db, 'Board');
+  const newBoardRef = doc(BoardCollection);
+  const { uid } = auth.currentUser;
+  const CreatorId = uid;
+  const id = newBoardRef.id;
+  const newBoard = {
+    CreatorId,
+    Title:title,
+    Desc,
+    Category:category,
+    CreatedAt: Date.now(),
+    id,
+  };
+  return await setDoc(newBoardRef,newBoard);
+  
+};

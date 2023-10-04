@@ -36,7 +36,7 @@ const Add = styled.TouchableOpacity`
 const getDateOrTime = ts => {
     const now = moment().startOf('day');
     const target = moment(ts).startOf('day');
-    return moment(ts).format(now.diff(target, 'day') > 0 ? 'MM/DD' : 'HH:mm');
+    return moment(ts).format(now.diff(target, 'day') > 0 ? 'YYYY.MM.DD' : 'HH:mm');
   };
   
   const ItemContainer = styled.TouchableOpacity`
@@ -62,6 +62,7 @@ const getDateOrTime = ts => {
     font-size: 16px;
     font-weight: 600;
     line-height: 30px;
+    margin-left: 5px;
     color: ${({ theme }) => theme.text};
   `;
 
@@ -118,13 +119,13 @@ const getDateOrTime = ts => {
   const LOGO = 'https://firebasestorage.googleapis.com/v0/b/swingfit-a15ef.appspot.com/o/image_31.png?alt=media';
 
   const Item = React.memo(
-    ({ item: { CreatorId, Title, Desc, CreatedAt }, onPress }) => {
+    ({ item: { CreatorId, Title, Desc, CreatedAt,Category }, onPress }) => {
       return (
         <ItemContainer onPress={() => onPress({ CreatorId, Title })}>
-          <ItemCategory>질문있어요</ItemCategory>
+          <ItemCategory>{Category}</ItemCategory>
           <View style={stlyes.Content}>
             <ItemTextContainer>
-            <Text style={stlyes.QText}>Q.</Text>
+            {Category=="질문있어요" ? <Text style={stlyes.QText}>Q.</Text> : ''}
             <View style={{width:"100%"}}>
               <ItemTitle>{Title}</ItemTitle>
               <ItemDesc>{Desc}</ItemDesc>
@@ -163,7 +164,7 @@ const BoardList = ({ navigation }) => {
           // console.log(data); //데이터 확인
           list.push(data);
         });
-        // console.log(list); // list 배열 확인
+        //console.log(list); // list 배열 확인
         setBoard(list);
         
       });
@@ -178,13 +179,13 @@ const BoardList = ({ navigation }) => {
         renderItem={({ item }) => (
           <Item
             item={item}
-            onPress={params => navigation.navigate('', params)}
+            onPress={() => navigation.navigate('Board', item)}
           />
         )}
         keyExtractor={item => item['CreatorId'].toString()}
         windowSize={5}
         />
-        <Add onPress={() => console.log('hh')}><AntDesign name="plus" size={30} color="white" /></Add>
+        <Add onPress={()=>{navigation.navigate('BoardCreation')}}><AntDesign name="plus" size={30} color="white" /></Add>
         
       </Container>
     );

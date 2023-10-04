@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext ,ProgressContext} from '../contexts';
 import { Button, Image, Input } from '../components';
+import { KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { getCurrentUser, updateUserInfo, signout,createInformation,updateInformation } from '../firebase';
 import { Alert,View,Text,TextInput,StyleSheet,ScrollView } from 'react-native';
 import { ThemeContext } from 'styled-components/native';
@@ -203,91 +204,77 @@ const Profile = () => {
 
 
   return (
-    <View style={styles.Container} insets={insets}>
-      <ScrollView  contentContainerStyle={{ flex: 1,  height: 1000 }} >
-        <Text style={styles.styleProfileHeaderTitle}>초보골퍼! <Text style={{fontWeight:800}}>{user.name}님</Text></Text>
+    <KeyboardAwareScrollView  contentContainerStyle={{ flex: 1}} keyboardShouldPersistTaps="always"  >
+      <View style={styles.Container} insets={insets}>
+          <Text style={styles.styleProfileHeaderTitle}>초보골퍼! <Text style={{fontWeight:800}}>{user.name}님</Text></Text>
 
-        <View style={styles.styleProfileHeaderContainer}>
-          <Image showButton url={photo} onChangePhoto={_handlePhotoChange} styles={{width:140,height:140,
-                  borderColor: '#4ABE78',
-                  borderStyle: 'solid',
-                  borderWidth: 5,
-                  borderRadius:90,
-                  }}/>
-          <View style={styles.styleProfileHeaderInformation}>
-            <Text style={styles.styleProfileHeaderInformationText}>초보골퍼</Text>
-            <Text style={styles.styleProfileHeaderInformationText}>{user.name}님</Text>
-            <View style={styles.styleProfileHeaderHitext}>
-              <TextInput 
-              placeholder='인사말을 입력해주세요!'
-              returnKeyType="done"
-              value={information}
-              onChangeText={_handleInformationChange}
-              ></TextInput>
-              <Feather name="edit" size={24} color="black" marginLeft={10} 
-              onPress= { _handleInformation}/>
+          <View style={styles.styleProfileHeaderContainer}>
+            <Image showButton url={photo} onChangePhoto={_handlePhotoChange} styles={{width:140,height:140,
+                    borderColor: '#4ABE78',
+                    borderStyle: 'solid',
+                    borderWidth: 5,
+                    borderRadius:90,
+                    }}/>
+            <View style={styles.styleProfileHeaderInformation}>
+              <Text style={styles.styleProfileHeaderInformationText}>초보골퍼</Text>
+              <Text style={styles.styleProfileHeaderInformationText}>{user.name}님</Text>
+              <View style={styles.styleProfileHeaderHitext}>
+                <TextInput 
+                placeholder='인사말을 입력해주세요!'
+                returnKeyType="done"
+                value={information}
+                onChangeText={_handleInformationChange}
+                ></TextInput>
+                <Feather name="edit" size={24} color="black" marginLeft={10} 
+                onPress= { _handleInformation}/>
+              </View>
             </View>
+
           </View>
 
-        </View>
+          <View style={styles.styleProfileScoreContainer}>
+            <View style={styles.styleProfileEvScoreContainer}>
+              <View style={styles.styleProfileEvScore}>
+                <Octicons name="graph" size={16} color="black" marginBottom={10} paddingTop={10} marginRight={5} />
+                <Text>스윙 평균 점수</Text>
+              </View>
+              <Text><Text style={{fontWeight:700}}>450</Text> 타</Text> 
+              {/*서버에서 불러와야 함 */}
+            </View>
+            <View style={styles.styleProfileEvScoreContainer}>
+              <View style={styles.styleProfileEvScore}>
+                <FontAwesome5 name="award" size={16} color="black" marginBottom={10} paddingTop={10} marginRight={5} />
+                <Text>스윙 최고 점수</Text>
+              </View>
+              <Text><Text style={{fontWeight:700}}>520</Text> 타</Text> 
+              {/*서버에서 불러와야 함 */}
+            </View>
+            <View style={styles.styleProfileProblembContainer}>
+              <View style={styles.styleProfileEvScore}>
+                <MaterialIcons name="mood-bad" size={16} color="black" marginBottom={10} paddingTop={10} marginRight={5} />
+                <Text>나의 문제점</Text>
+              </View>
 
-        <View style={styles.styleProfileScoreContainer}>
-          <View style={styles.styleProfileEvScoreContainer}>
-            <View style={styles.styleProfileEvScore}>
-              <Octicons name="graph" size={16} color="black" marginBottom={10} paddingTop={10} marginRight={5} />
-              <Text>스윙 평균 점수</Text>
-            </View>
-            <Text><Text style={{fontWeight:700}}>450</Text> 타</Text> 
-            {/*서버에서 불러와야 함 */}
-          </View>
-          <View style={styles.styleProfileEvScoreContainer}>
-            <View style={styles.styleProfileEvScore}>
-              <FontAwesome5 name="award" size={16} color="black" marginBottom={10} paddingTop={10} marginRight={5} />
-              <Text>스윙 최고 점수</Text>
-            </View>
-            <Text><Text style={{fontWeight:700}}>520</Text> 타</Text> 
-            {/*서버에서 불러와야 함 */}
-          </View>
-          <View style={styles.styleProfileProblembContainer}>
-            <View style={styles.styleProfileEvScore}>
-              <MaterialIcons name="mood-bad" size={16} color="black" marginBottom={10} paddingTop={10} marginRight={5} />
-              <Text>나의 문제점</Text>
-            </View>
-            <View style={styles.styleProfileProblemDiv}>
-                <Text style={styles.styleProfileProblem} >아쉬워요</Text>
-                <Text style={styles.styleProfileProblemTitle}>임팩트 헤드업</Text>
-                <Text style={styles.styleProfileProblemDesc}>임팩트 순간 볼을 끝까지 보지 못해 방향성이 저하되고, 거리의 손실이 발생합니다.</Text>
-            </View>
-            <View style={styles.styleProfileProblemDiv}>
-                <Text style={styles.styleProfileProblem} >아쉬워요</Text>
-                <Text style={styles.styleProfileProblemTitle}>탑 하체 무너짐</Text>
-                <Text style={styles.styleProfileProblemDesc}>백스윙 탑에서 오른쪽 다리가 펴져 하체가 유지 되지 않습니다. 임팩트의 정확도가 떨어지고 슬라이스, 훅을 유발합니다.</Text>
-            </View>
-            <View style={styles.styleProfileProblemDiv}>
-                <Text style={styles.styleProfileProblem} >아쉬워요</Text>
-                <Text style={styles.styleProfileProblemTitle}>임팩트 헤드업</Text>
-                <Text style={styles.styleProfileProblemDesc}>임팩트 순간 볼을 끝까지 보지 못해 방향성이 저하되고, 거리의 손실이 발생합니다.</Text>
+              {/*서버에서 불러와야 함 */}
+              <View style={styles.styleProfileProblemDiv}>
+                  <Text style={styles.styleProfileProblem} >아쉬워요</Text>
+                  <Text style={styles.styleProfileProblemTitle}>임팩트 헤드업</Text>
+                  <Text style={styles.styleProfileProblemDesc}>임팩트 순간 볼을 끝까지 보지 못해 방향성이 저하되고, 거리의 손실이 발생합니다.</Text>
+              </View>
+              <View style={styles.styleProfileProblemDiv}>
+                  <Text style={styles.styleProfileProblem} >아쉬워요</Text>
+                  <Text style={styles.styleProfileProblemTitle}>탑 하체 무너짐</Text>
+                  <Text style={styles.styleProfileProblemDesc}>백스윙 탑에서 오른쪽 다리가 펴져 하체가 유지 되지 않습니다. 임팩트의 정확도가 떨어지고 슬라이스, 훅을 유발합니다.</Text>
+              </View>
+              <View style={styles.styleProfileProblemDiv}>
+                  <Text style={styles.styleProfileProblem} >아쉬워요</Text>
+                  <Text style={styles.styleProfileProblemTitle}>임팩트 헤드업</Text>
+                  <Text style={styles.styleProfileProblemDesc}>임팩트 순간 볼을 끝까지 보지 못해 방향성이 저하되고, 거리의 손실이 발생합니다.</Text>
+              </View>
             </View>
           </View>
-        </View>
-        {/* <Button
-          title="Sign out"
-          onPress={async () => {
-            try {
-              spinner.start();
-              await signout();
-            } catch (e) {
-            } finally {
-              setUser({});
-              spinner.stop();
-            }
-          }}
-          containerStyle={{
-            backgroundColor: theme.btnSignOut,
-          }}
-        /> */}
-      </ScrollView>
-    </View>
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 

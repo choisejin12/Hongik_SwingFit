@@ -23,9 +23,9 @@ const ButtonIcon = styled(MaterialIcons).attrs(({theme}) => ({
     color: theme.imgBtnIcon,
 }))``;
 
-const PhotoButton = ({onPress}) => {
+const PhotoButton = ({onPress,Buttonstyles}) => {
     return (
-        <ButtonContainer onPress={onPress}>
+        <ButtonContainer onPress={onPress} style={Buttonstyles}>
             <ButtonIcon/>
         </ButtonContainer>
     );
@@ -42,7 +42,7 @@ const ProfileImage = styled.Image`
     /* border-radius: 50px; */
 `;
 
-const Image = ( { url , showButton, onChangePhoto ,styles}) => {
+const Image = ( { url , showButton, onChangePhoto ,styles,Buttonstyles}) => {
     useEffect(() => {
         (async () => {
             if (Platform.OS !== 'web') {
@@ -72,7 +72,7 @@ const Image = ( { url , showButton, onChangePhoto ,styles}) => {
     return(
         <Container>
             <ProfileImage source={{ uri : url }} style={styles}/>
-            {showButton && <PhotoButton onPress={_handlePhotoBtnPress}/>}
+            {showButton && <PhotoButton onPress={_handlePhotoBtnPress} style={Buttonstyles}/>}
         </Container>
     );
 };

@@ -9,6 +9,8 @@ import Loading_2 from './Loading_2';
 import SignMain from "./SignMain";
 import Home from "./Home";
 import BoardList from './BoardList';
+import BoardCreation from "./BoardCreation";
+import Board from './Board';
 
 export {
     SignUp,
@@ -22,4 +24,6 @@ export {
     SignMain,
     Home,
     BoardList,
+    BoardCreation,
+    Board,
 };
