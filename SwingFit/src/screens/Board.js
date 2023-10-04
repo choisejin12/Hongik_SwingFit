@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import {View,Text,StyleSheet,TouchableOpacity} from 'react-native';
+import {View,Text,StyleSheet,TouchableOpacity,FlatList} from 'react-native';
 import { KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { Image } from '../components';
 import { getCurrentUser, app,updateUserInfo } from '../firebase';
@@ -79,15 +79,35 @@ const Board = ({ navigation,route }) => {
         collection(db, `${docRef.path}/Coment`),
         orderBy('CreatedAt', 'desc')
         );
+        
         const unsubscribe = onSnapshot(collectionQuery, snapshot => {
         const list = [];
         snapshot.forEach(doc => {
+            console.log(doc.data());
             list.push(doc.data());
         });
+        
         setComent(list);
+        
         });
         return () => unsubscribe();
     }, []);
+
+    // useEffect(() => {
+    //     const result = data.map((ele, i) => {
+    //       return (
+    //         <View key={i}>
+    //           <Text>
+    //             * 공지사항
+    //           </Text>
+    //           <Text>
+    //             공지의 제목은 {ele.title} 입니다.
+    //           </Text>
+    //          </View>
+    //       );
+    //     });
+    //     setNotice(result);
+    //   }, [data]);
 
 
     const _handlePhotoChange = async url => {
@@ -99,9 +119,18 @@ const Board = ({ navigation,route }) => {
         } 
       };
 
-    useEffect(() => {
-        
-    });
+    const Item = React.memo(
+        ({ item: { CreatorId, Coment, CreatedAt, name }, onPress }) => {
+          return (
+            <View>
+                <Text>{name}</Text>
+                <Text>{Coment}</Text>
+            </View>
+          );
+        }
+      );
+
+
     const LOGO = 'https://firebasestorage.googleapis.com/v0/b/swingfit-a15ef.appspot.com/o/ex.png?alt=media';
     return (
 
@@ -136,6 +165,8 @@ const Board = ({ navigation,route }) => {
                 <Ionicons name="chatbubble-outline" size={27} color="black" />
                 <Text style={{marginLeft:10,lineHeight:26}}>댓글 3</Text>
             </View>
+
+
             </Container>
     </KeyboardAwareScrollView>
       
