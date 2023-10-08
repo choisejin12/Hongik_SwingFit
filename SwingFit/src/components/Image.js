@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import {MaterialIcons} from '@expo/vector-icons';
 import { Alert , Platform} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
@@ -81,10 +81,10 @@ Image.defaultProps = {
     url : 'https://firebasestorage.googleapis.com/v0/b/rn-chat-d4c92.appspot.com/o/face.png?alt=media',
 }
 
-Image.PropTypes = {
-    url : PropTypes.string,
-    showButton: PropTypes.bool,
-    onChangePhoto: PropTypes.func,
+Image.propTypes = {
+    url : propTypes.string,
+    showButton: propTypes.bool,
+    onChangePhoto: propTypes.func,
 };
 
 export default Image;

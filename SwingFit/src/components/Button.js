@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 const Container = styled.View`
     background-color: ${({theme}) => theme.btnBackground};
@@ -28,12 +28,12 @@ const Button = ({title,onPress,containerStyle, textStyle,disabled}) => {
     );
 };
 
-Button.PropTypes = {
-    title: PropTypes.string.isRequired,
-    onPress: PropTypes.func.isRequired,
-    containerStyle: PropTypes.object,
-    textStyle:PropTypes.object,
-    disabled:PropTypes.bool,
+Button.propTypes = {
+    title: propTypes.string.isRequired,
+    onPress: propTypes.func.isRequired,
+    containerStyle: propTypes.object,
+    textStyle:propTypes.object,
+    disabled:propTypes.bool,
 };
 
 export default Button;

@@ -1,11 +1,9 @@
-import React, { useContext ,useState,useEffect} from 'react';
+import React, { useState,useEffect} from 'react';
 import styled from 'styled-components/native';
-import {ThemeContext} from 'styled-components/native';
-import {Button} from '../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {StyleSheet,FlatList,Text,View,Image} from 'react-native';
 import { AntDesign,MaterialIcons,Ionicons } from '@expo/vector-icons';
-import { app } from '../firebase';
+import { app,getComentLen } from '../firebase';
 import moment from 'moment';
 import {
     getFirestore,
@@ -36,7 +34,7 @@ const Add = styled.TouchableOpacity`
 const getDateOrTime = ts => {
     const now = moment().startOf('day');
     const target = moment(ts).startOf('day');
-    return moment(ts).format(now.diff(target, 'day') > 0 ? 'YYYY.MM.DD' : 'HH:mm');
+    return moment(ts).format(now.diff(target, 'day') > 0 ? 'YYYY.MM.DD' : 'YYYY.MM.DD');
   };
   
   const ItemContainer = styled.TouchableOpacity`
@@ -80,12 +78,6 @@ const getDateOrTime = ts => {
     color: black;
   `;
   
-  const ItemIcon = styled(MaterialIcons).attrs(({ theme }) => ({
-    name: 'keyboard-arrow-right',
-    size: 24,
-    color: theme.itemIcon,
-  }))``;
-
   const ItemCategory = styled.Text`
     width: 69px;
     padding: 3px;
@@ -119,7 +111,7 @@ const getDateOrTime = ts => {
   const LOGO = 'https://firebasestorage.googleapis.com/v0/b/swingfit-a15ef.appspot.com/o/image_31.png?alt=media';
 
   const Item = React.memo(
-    ({ item: { CreatorId, Title, Desc, CreatedAt,Category }, onPress }) => {
+    ({ item: { CreatorId, Title, Desc, CreatedAt,Category,id }, onPress }) => {
       return (
         <ItemContainer onPress={() => onPress({ CreatorId, Title })}>
           <ItemCategory>{Category}</ItemCategory>
@@ -131,10 +123,7 @@ const getDateOrTime = ts => {
               <ItemDesc>{Desc}</ItemDesc>
               <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                 <ItemTime>{getDateOrTime(CreatedAt)}  작성</ItemTime>
-                <View style={{flexDirection:'row'}}>
-                  <Ionicons name="chatbubble-outline" size={24} color="black" />
-                  <Text style={{marginLeft:6,lineHeight:25}}>3</Text>
-                </View>
+                
 
               </View>
             </View>
@@ -152,6 +141,8 @@ const BoardList = ({ navigation }) => {
     const db = getFirestore(app);
   
     useEffect(() => {
+
+      
       const collectionQuery = query(
         collection(db, 'Board'),
         orderBy('CreatedAt', 'desc')
@@ -159,6 +150,7 @@ const BoardList = ({ navigation }) => {
       
       const unsubscribe = onSnapshot(collectionQuery, snapshot => {
         const list = [];
+        
         snapshot.forEach(doc => {
           const data = doc.data();
           // console.log(data); //데이터 확인
@@ -168,6 +160,8 @@ const BoardList = ({ navigation }) => {
         setBoard(list);
         
       });
+      
+     
       return () => unsubscribe();
     }, []);
   
@@ -182,7 +176,7 @@ const BoardList = ({ navigation }) => {
             onPress={() => navigation.navigate('Board', item)}
           />
         )}
-        keyExtractor={item => item['CreatorId'].toString()}
+        keyExtractor={(item) => item['id'].toString()}
         windowSize={5}
         />
         <Add onPress={()=>{navigation.navigate('BoardCreation')}}><AntDesign name="plus" size={30} color="white" /></Add>

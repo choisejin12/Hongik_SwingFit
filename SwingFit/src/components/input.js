@@ -1,6 +1,6 @@
 import React ,{ useState , forwardRef }from 'react';
 import styled from 'styled-components/native';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Container = styled.View`
@@ -76,17 +76,17 @@ Input.defaultProps={
 };
 
 
-Input.PropTypes = {
-    label: PropTypes.string,
-    value : PropTypes.string.isRequired,
-    onchangeText: PropTypes.func,
-    onsubmitEditing: PropTypes.func,
-    onBlur: PropTypes.func,
-    placeholder: PropTypes.string,
-    returnKeyType: PropTypes.oneOf(['done','next']),
-    maxLength:PropTypes.number,
-    isPassword:PropTypes.bool,
-    disabled:PropTypes.bool,
+Input.propTypes = {
+    label: propTypes.string,
+    value : propTypes.string.isRequired,
+    onchangeText: propTypes.func,
+    onsubmitEditing: propTypes.func,
+    onBlur: propTypes.func,
+    placeholder: propTypes.string,
+    returnKeyType: propTypes.oneOf(['done','next']),
+    maxLength:propTypes.number,
+    isPassword:propTypes.bool,
+    disabled:propTypes.bool,
 }
 
 export default Input;

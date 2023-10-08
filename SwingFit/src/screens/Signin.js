@@ -1,7 +1,7 @@
 import React, { useContext , useState , useRef , useEffect} from 'react';
 import styled from 'styled-components/native';
 import {ThemeContext} from 'styled-components/native';
-import {Button,Image,Input,ErrorMessage} from '../components';
+import {Button,Input,ErrorMessage} from '../components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { signin } from '../firebase';
 import { Alert } from 'react-native';

@@ -60,7 +60,7 @@ const Loading_1 = ({navigation}) => {
             title="다음" 
             onPress={() => navigation.replace('Loading_2')} 
             containerStyle={{ marginTop: 30 , backgroundColor: 'black' , height: 67 }}
-            textStyle={{color:"white", fontSize:30, fontweight: 700}}
+            textStyle={{color:"white", fontSize:30, fontWeight: 'bold'}}
             />
         </Container>
     );

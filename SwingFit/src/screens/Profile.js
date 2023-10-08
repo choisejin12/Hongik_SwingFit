@@ -3,7 +3,7 @@ import { UserContext ,ProgressContext} from '../contexts';
 import { Button, Image, Input } from '../components';
 import { KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { getCurrentUser, updateUserInfo, signout,createInformation,updateInformation } from '../firebase';
-import { Alert,View,Text,TextInput,StyleSheet,ScrollView } from 'react-native';
+import { Alert,View,Text,TextInput,StyleSheet,ScrollView, TouchableOpacity } from 'react-native';
 import { ThemeContext } from 'styled-components/native';
 import { Feather , FontAwesome5 , Octicons ,MaterialIcons} from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -207,17 +207,29 @@ const Profile = () => {
     <KeyboardAwareScrollView  contentContainerStyle={{ flex: 1}} keyboardShouldPersistTaps="always"  >
       <View style={styles.Container} insets={insets}>
           <Text style={styles.styleProfileHeaderTitle}>초보골퍼! <Text style={{fontWeight:800}}>{user.name}님</Text></Text>
-
+          
+          
           <View style={styles.styleProfileHeaderContainer}>
             <Image showButton url={photo} onChangePhoto={_handlePhotoChange} styles={{width:140,height:140,
                     borderColor: '#4ABE78',
-                    borderStyle: 'solid',
+                    
                     borderWidth: 5,
                     borderRadius:90,
                     }}/>
             <View style={styles.styleProfileHeaderInformation}>
               <Text style={styles.styleProfileHeaderInformationText}>초보골퍼</Text>
               <Text style={styles.styleProfileHeaderInformationText}>{user.name}님</Text>
+              <Text
+                onPress={async () => {
+                  try {
+                    spinner.start();
+                    await signout();
+                  } catch (e) {
+                  } finally {
+                    setUser({});
+                    spinner.stop();
+                  }
+                }} style={{fontSize:12,marginTop:5}}>로그아웃</Text>
               <View style={styles.styleProfileHeaderHitext}>
                 <TextInput 
                 placeholder='인사말을 입력해주세요!'

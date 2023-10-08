@@ -22,7 +22,7 @@ const StyledText = styled.Text`
     font-size : 30px;
     text-align: center;
     color : #111111;
-    font-weight: 700;
+    font-weight: bold;
     
 `;
 
@@ -77,7 +77,7 @@ const Loading_2 = ({navigation}) => {
             title="시작하기" 
             onPress={_handleStartBtnPress}
             containerStyle={{ marginTop: 30 , backgroundColor: 'black' , height: 67, }}
-            textStyle={{color:"white", fontSize:30, fontweight: 700}}
+            textStyle={{color:"white", fontSize:30, fontWeight: 'bold'}}
             />
         </Container>
     );

@@ -6,7 +6,7 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc, updateDoc ,getDoc ,getDocs} from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, updateDoc ,getDoc ,getDocs,onSnapshot,query,orderBy} from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import config from '../firebase.json';
 
@@ -148,3 +148,44 @@ export const createBoard = async ({title,Desc,category,photo}) => {
   return await setDoc(newBoardRef,newBoard);
   
 };
+
+export const createComent= async ({ coment,doc_id}) => {
+  try {
+    const commentRef = doc(collection(db, 'Board', doc_id, 'Comments'));
+    const { uid } = auth.currentUser;
+    const {displayName} = auth.currentUser;
+    const CreatorId = uid;
+    const newComent = {
+      CreatorId,
+      coment,
+      CreatedAt: Date.now(),
+      _id:doc_id,
+      name:displayName,
+    };
+    await setDoc(commentRef, newComent);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const getImg = async (userid) => {
+  try{
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `/profile/${userid}/photo.png`);
+    const protocol = storage._protocol+"://";
+    const host = storage._host+"/v0/b/";
+    const bucket = storageRef._location.bucket+"/o/";
+    const path = storageRef._location.path_+"?alt=media";
+    const newpath = path.replaceAll('/','%2F');
+    
+    const photoURL = protocol+host+bucket+newpath;
+    return photoURL;
+
+  }catch(e){
+    console.log(e);
+  }
+}
+
+
+

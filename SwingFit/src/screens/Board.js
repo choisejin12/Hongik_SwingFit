@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import {View,Text,StyleSheet,TouchableOpacity,FlatList} from 'react-native';
+import {View,Text,StyleSheet,TouchableOpacity,TextInput,FlatList} from 'react-native';
 import { KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { Image } from '../components';
-import { getCurrentUser, app,updateUserInfo } from '../firebase';
+import { getCurrentUser, app, updateUserInfo ,createComent , getImg} from '../firebase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import moment from 'moment';
 import { AntDesign,Ionicons } from '@expo/vector-icons';
@@ -51,6 +51,24 @@ const styles = StyleSheet.create({
         borderTopWidth: 2,
         borderBottomWidth: 2,
         borderColor:"#D9D9D9",
+        marginBottom:20,
+    },
+    ComentContainer:{
+        flexDirection:'row',
+        marginBottom:20,
+    },
+    ComentItem:{
+        width:260,
+    },
+    ComentImgBox:{
+        marginRight:10
+    },
+    comentinputBox:{
+        backgroundColor:'#BDBDBD',
+        flexDirection:'row',
+        justifyContent:'space-between',
+        padding:15,
+        borderRadius:30,
     }
 })
 
@@ -59,56 +77,39 @@ const Board = ({ navigation,route }) => {
     const insets = useSafeAreaInsets();
     const user = getCurrentUser();
 
-    const [Userphoto,setPhoto] = useState(user.photo);
-    const [coment, setComent] = useState([]);
-    const { uid, name, photo } = getCurrentUser();
+   
+    const [Userphoto,setPhoto] = useState();
 
+    const [coment, setComent] = useState([]);
 
     const db = getFirestore(app);
 
     const getDateOrTime = ts => {
         const now = moment().startOf('day');
         const target = moment(ts).startOf('day');
-        return moment(ts).format(now.diff(target, 'day') > 0 ? 'YYYY.MM.DD' : 'HH:mm');
+        return moment(ts).format(now.diff(target, 'day') > 0 ? 'YYYY.MM.DD' : 'YYYY.MM.DD');
     };
 
 
     useEffect(() => {
         const docRef = doc(db, 'Board', route.params.id);
+        const userid = route.params.CreatorId;
+        const profileimgurl = getImg(userid);
+        setPhoto(profileimgurl._j);
         const collectionQuery = query(
-        collection(db, `${docRef.path}/Coment`),
-        orderBy('CreatedAt', 'desc')
+          collection(db, `${docRef.path}/Comments`),
+          orderBy('CreatedAt', 'desc')
         );
-        
         const unsubscribe = onSnapshot(collectionQuery, snapshot => {
-        const list = [];
-        snapshot.forEach(doc => {
-            console.log(doc.data());
+          const list = [];
+          snapshot.forEach(doc => {
             list.push(doc.data());
-        });
-        
-        setComent(list);
-        
+          });
+          setComent(list);
         });
         return () => unsubscribe();
-    }, []);
-
-    // useEffect(() => {
-    //     const result = data.map((ele, i) => {
-    //       return (
-    //         <View key={i}>
-    //           <Text>
-    //             * 공지사항
-    //           </Text>
-    //           <Text>
-    //             공지의 제목은 {ele.title} 입니다.
-    //           </Text>
-    //          </View>
-    //       );
-    //     });
-    //     setNotice(result);
-    //   }, [data]);
-
+      }, []);
+    
 
     const _handlePhotoChange = async url => {
         try {
@@ -119,19 +120,42 @@ const Board = ({ navigation,route }) => {
         } 
       };
 
-    const Item = React.memo(
-        ({ item: { CreatorId, Coment, CreatedAt, name }, onPress }) => {
-          return (
-            <View>
-                <Text>{name}</Text>
-                <Text>{Coment}</Text>
-            </View>
-          );
-        }
-      );
+    const _handleComentSend = async () => {
+        try {
+            const doc_id = route.params.id;
+            await createComent({coment,doc_id});
+            
+          } catch (e) {
+            Alert.alert('Message Error', e.message);
+          }
+    }
+
+    const _handleComentChange = coment => {
+        const list=[];
+        list.push(coment);
+        setComent(list);
+    }
 
 
     const LOGO = 'https://firebasestorage.googleapis.com/v0/b/swingfit-a15ef.appspot.com/o/ex.png?alt=media';
+
+    const Item = React.memo(
+        ({ item: { CreatorId,coment,CreatedAt,name }}) => {
+          return (
+           <View style={styles.ComentContainer}>
+                <View style={styles.ComentImgBox}>
+                    <Image url={getImg(CreatorId)._j} styles={{borderRadius:90,width:50,height:50}}/>
+                </View>
+                <View style={styles.ComentItem}>
+                    <Text style={{fontWeight:'bold'}}>{name}</Text>
+                    <Text style={{marginBottom:7}}>{getDateOrTime(CreatedAt)}</Text>
+                    <Text>{coment}</Text>
+                </View>
+           </View>
+          );
+        }
+      );
+    
     return (
 
         <KeyboardAwareScrollView keyboardShouldPersistTaps="always" extraScrollHeigh={20} >
@@ -163,10 +187,42 @@ const Board = ({ navigation,route }) => {
 
             <View style={styles.BoardComentBox}>
                 <Ionicons name="chatbubble-outline" size={27} color="black" />
-                <Text style={{marginLeft:10,lineHeight:26}}>댓글 3</Text>
+                <Text style={{marginLeft:10,lineHeight:26}}>댓글 {coment.length}</Text>
             </View>
 
+            <View>
+                <View>
+                    {
+                        coment.map((items) => {
+                        return <Item item={items}/>
+                        })
+                    }
 
+                </View>
+                <View style={styles.comentinputBox}>
+                    <TextInput 
+                    placeholder='댓글을 남겨보세요'
+                    value={coment}
+                    onChangeText={_handleComentChange}
+                    onSubmitEditing={_handleComentSend}
+                    returnketType="done"
+                    onBlur={() => setComent(coment)}
+                    multiline = {true} 
+                    numberOfLines = {2} 
+                    />
+                    <TouchableOpacity onPress={_handleComentSend} 
+                    style={{
+                        marginRight:20,
+                        paddingTop:8,
+                        paddingLeft:20,
+                        borderLeftColor:'#8E8E8E',
+                        borderLeftWidth:2,
+                        }}>
+                        <Text>등록</Text>
+                    </TouchableOpacity>
+                    </View>
+                
+            </View>
             </Container>
     </KeyboardAwareScrollView>
       
