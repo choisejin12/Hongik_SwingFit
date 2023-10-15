@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { ThemeContext } from 'styled-components/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import { ChannelList, Profile , Home , BoardList} from '../screens';
+import { Test, Profile , Home , BoardList,Map} from '../screens';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
@@ -52,28 +52,6 @@ const Tab = ({ route, navigation }) => {
         tabBarStyle: { backgroundColor:'white', height:80}
          }}>
             <_Tab.Screen 
-            name="List" 
-            component={ChannelList}
-            options={{
-                tabBarIcon: ({ focused }) => 
-                    TabIcon({
-                        name: focused ? 'center-focus-strong' : 'center-focus-weak',
-                        focused,
-                    }),
-            }}
-            />
-            <_Tab.Screen 
-            name="Location" 
-            component={ChannelList}
-            options={{
-                tabBarIcon: ({ focused }) => 
-                    TabIcon({
-                        name: focused ? 'location-on' : 'not-listed-location',
-                        focused,
-                    }),
-            }}
-            />
-            <_Tab.Screen 
             name="Home" 
             component={Home}
             options={{
@@ -85,6 +63,30 @@ const Tab = ({ route, navigation }) => {
                 
             }}
             />
+            <_Tab.Screen 
+            name="Test" 
+            component={Test}
+            options={{
+                tabBarIcon: ({ focused }) => 
+                    TabIcon({
+                        name: focused ? 'center-focus-strong' : 'center-focus-weak',
+                        focused,
+                    }),
+            }}
+            />
+            <_Tab.Screen 
+            name="Location" 
+            component={Map}
+            options={{
+                tabBarIcon: ({ focused }) => 
+                    TabIcon({
+                        name: focused ? 'location-on' : 'not-listed-location',
+                        focused,
+                    }),
+            }}
+            />
+
+            
             <_Tab.Screen 
             name="Search" 
             component={BoardList}

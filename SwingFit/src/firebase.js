@@ -37,6 +37,24 @@ const uploadImage = async uri => {
   return await getDownloadURL(storageRef);
 };
 
+const uploadPostureImage = async uri => {
+  if (uri.startsWith('https')) {
+    return uri;
+  }
+
+  const response = await fetch(uri);
+  const blob = await response.blob();
+
+  const { uid } = auth.currentUser;
+  const storage = getStorage(app);
+  const storageRef = ref(storage, `/Posture/${uid}/photo.png`);
+  await uploadBytes(storageRef, blob, {
+    contentType: 'image/png',
+  });
+
+  return await getDownloadURL(storageRef);
+};
+
 export const signup = async ({ name, email, password, photo }) => {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   const photoURL = await uploadImage(photo);
@@ -54,6 +72,13 @@ export const updateUserInfo = async photo => {
   await updateProfile(auth.currentUser, { photoURL });
   return photoURL;
 };
+
+export const updateUserPosture = async photo => {
+  const photoURL = await uploadPostureImage(photo);
+  //await updateProfile(auth.currentUser, { photoURL });
+  return photoURL;
+};
+
 
 export const signout = async () => {
   await signOut(auth);
@@ -119,7 +144,7 @@ const uploadBoardImage = async uri => {
 
   const response = await fetch(uri);
   const blob = await response.blob();
-
+  
   const { uid } = auth.currentUser;
   const storage = getStorage(app);
   const storageRef = ref(storage, `/Board/${uid}/photo.png`);

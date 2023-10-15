@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeContext } from 'styled-components/native';
-import {Channel, ChannelCreation, BoardCreation,Board} from '../screens';
+import {BoardCreation,Board,Diagnosis} from '../screens';
 import Tab from './Tab';
 import { AntDesign } from '@expo/vector-icons';
 import {TouchableOpacity} from 'react-native'
@@ -59,6 +59,8 @@ const Main = () => {
             }
                 }
             />
+
+            <Stack.Screen name="Diagnosis" component={Diagnosis}/>
         {/* <Stack.Screen name="ChannelCreation" component={ChannelCreation}/>
         <Stack.Screen name="Channel" component={Channel}/> */}
         

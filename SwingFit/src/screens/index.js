@@ -11,6 +11,9 @@ import Home from "./Home";
 import BoardList from './BoardList';
 import BoardCreation from "./BoardCreation";
 import Board from './Board';
+import Map from './Map';
+import Test from './Test';
+import Diagnosis from './Diagnosis';
 
 export {
     SignUp,
@@ -26,4 +29,7 @@ export {
     BoardList,
     BoardCreation,
     Board,
+    Map,
+    Test,
+    Diagnosis,
 };

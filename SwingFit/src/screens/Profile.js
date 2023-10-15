@@ -166,7 +166,8 @@ const Profile = () => {
 
   const _handleInformationChange = information => {
     setInformation(information);
-  }
+  };
+
   const _handlePhotoChange = async url => {
     try {
       spinner.start();
