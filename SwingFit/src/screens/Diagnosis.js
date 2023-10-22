@@ -1,13 +1,14 @@
-import React , {useState,useEffect,useCallback} from 'react';
-import {View,TouchableOpacity,Text,StyleSheet,} from 'react-native';
+import React , {useState,useEffect} from 'react';
+import {View,Text,StyleSheet,} from 'react-native';
 import styled from 'styled-components/native';
 import { KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Loading,Image} from '../components';
+import {Image} from '../components';
 import { getPostureImg } from '../firebase';
-import YoutubePlayer from "react-native-youtube-iframe";
+
+
 
 const ShareBox = styled.Text`
-       position:fixed;
+       position:absolute;
        background-color:#0B1144;
        width:180px;
        padding:10px;
@@ -110,7 +111,7 @@ const styles = StyleSheet.create(
 
 
 const Diagnosis = ({navigation}) => {
-    const [photo,setPhoto] = useState('');
+    const [photo,setPhoto] = useState('f');
 
     useEffect(() => {
         async function fetchAndSetUser() { 1

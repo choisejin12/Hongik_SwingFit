@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext ,ProgressContext} from '../contexts';
-import { Button, Image, Input } from '../components';
+import { Image} from '../components';
 import { KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { getCurrentUser, updateUserInfo, signout,createInformation,updateInformation } from '../firebase';
-import { Alert,View,Text,TextInput,StyleSheet,ScrollView, TouchableOpacity } from 'react-native';
-import { ThemeContext } from 'styled-components/native';
+import { Alert,View,Text,TextInput,StyleSheet} from 'react-native';
 import { Feather , FontAwesome5 , Octicons ,MaterialIcons} from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { app } from '../firebase';
@@ -19,7 +18,7 @@ const styles = StyleSheet.create({
   Container:
   {
     position:'relative',
-    flex:1,
+    // flex:1,
     backgroundColor: 'white',
   },
   styleProfileHeaderTitle:
@@ -205,8 +204,8 @@ const Profile = () => {
 
 
   return (
-    <KeyboardAwareScrollView  contentContainerStyle={{ flex: 1}} keyboardShouldPersistTaps="always"  >
-      <View style={styles.Container} insets={insets}>
+    <KeyboardAwareScrollView  style={styles.Container} contentContainerStyle={{ flex: 1}} keyboardShouldPersistTaps="always"  >
+      {/* <View style={styles.Container} insets={insets}> */}
           <Text style={styles.styleProfileHeaderTitle}>초보골퍼! <Text style={{fontWeight:800}}>{user.name}님</Text></Text>
           
           
@@ -286,7 +285,7 @@ const Profile = () => {
               </View>
             </View>
           </View>
-      </View>
+      {/* </View> */}
     </KeyboardAwareScrollView>
   );
 };

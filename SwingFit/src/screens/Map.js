@@ -1,10 +1,7 @@
-import React , {useState,useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import { PROVIDER_GOOGLE, Marker  } from 'react-native-maps';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import { Marker  } from 'react-native-maps';
 import MapView  from 'react-native-maps';
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { FontAwesome5 } from '@expo/vector-icons';
-import Geolocation from "react-native-geolocation-service";
 
 const styles = StyleSheet.create(
     {

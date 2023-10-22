@@ -5,7 +5,7 @@ import { Test, Profile , Home , BoardList,Map} from '../screens';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
-import { Text,View } from '../components';
+
 
 const TabIcon = ({ name, focused }) => {
     const theme = useContext(ThemeContext);

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import { getCurrentUser } from '../firebase';
 import { Text,View,StyleSheet,TouchableOpacity  } from 'react-native';
@@ -105,7 +105,7 @@ const user = getCurrentUser();
             안녕하세요.              
         </StyledText>
         <Text style={{position:'absolute',top:130,fontSize:36,fontWeight:'bold',left:40}}><Text style={{color:"#30B465",}}>{user.name}</Text> 회원님!</Text>
-        <TouchableOpacity style={styles.Home_Information} onPress={() => {navigation.navigate('Diagnosis')}}>
+        <TouchableOpacity style={styles.Home_Information} onPress={() => {navigation.navigate('Test')}}>
             <View style={styles.Home_Information_Left}>
                  <FontAwesome name="arrow-right" size={65} color="white" marginLeft={50} marginTop={26} />
             </View>

@@ -161,7 +161,7 @@ const Board = ({ navigation,route }) => {
         <KeyboardAwareScrollView keyboardShouldPersistTaps="always" extraScrollHeigh={20} >
             <Container insets={insets}>
 
-            <ItemCategory>{}</ItemCategory>
+            <ItemCategory>{route.params.Category}</ItemCategory>
 
             <View style={styles.BoardProfileContainer}>
                 <Image url={Userphoto} onChangePhoto={_handlePhotoChange} styles={{width:80,height:80,

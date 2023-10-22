@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {StyleSheet,FlatList,Text,View} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { app,getListImg} from '../firebase';
+import { app} from '../firebase';
 import { Image } from '../components';
 import moment from 'moment';
 import {

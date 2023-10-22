@@ -6,10 +6,9 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc, updateDoc ,getDoc ,getDocs,onSnapshot,query,orderBy} from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, updateDoc  ,getDocs} from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import config from '../firebase.json';
-import storage from '@react-native-firebase/storage';
 
 export const app = initializeApp(config);
 

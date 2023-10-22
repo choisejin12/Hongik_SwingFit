@@ -1,7 +1,7 @@
 import React ,{ useState , forwardRef }from 'react';
 import styled from 'styled-components/native';
 import propTypes from 'prop-types';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 const Container = styled.View`
     flex-direction: column;
