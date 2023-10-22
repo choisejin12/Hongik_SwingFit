@@ -1,9 +1,10 @@
-import React from 'react';
+import React , {useState,useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import { PROVIDER_GOOGLE, Marker  } from 'react-native-maps';
 import MapView  from 'react-native-maps';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { FontAwesome5 } from '@expo/vector-icons';
+import Geolocation from "react-native-geolocation-service";
 
 const styles = StyleSheet.create(
     {
@@ -60,9 +61,49 @@ const styles = StyleSheet.create(
             },
       }
 );
-
+// async function requestPermission() {
+//   try {
+//     if (Platform.OS === "ios") {
+//       return await Geolocation.requestAuthorization("always");
+//     }
+//     // 안드로이드 위치 정보 수집 권한 요청
+//     if (Platform.OS === "android") {
+//       return await PermissionsAndroid.request(
+//         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+//       );
+//     }
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }
 
 const Map = () => {
+
+
+    // const [location, setLocation] = useState();
+    // useEffect(() => {
+    //   requestPermission().then(result => {
+    //     console.log({ result });
+    //     if (result === "granted") {
+    //       Geolocation.getCurrentPosition(
+    //         pos => {
+              
+    //           setLocation(pos.coords);
+    //           console.log(location);
+    //         },
+    //         error => {
+    //           console.log(error);
+    //         },
+    //         {
+    //           enableHighAccuracy: true,
+    //           timeout: 3600,
+    //           maximumAge: 3600,
+    //         },
+    //       );
+    //     }
+    //   });
+    // }, []);
+    
     return(
     <View style={styles.screen}>
         
@@ -74,6 +115,16 @@ const Map = () => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421
             }}>
+
+              {/* <Marker
+                coordinate={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+                }}
+                pinColor="#FF0000"
+                title="현재 내 위치"
+                description="현재 내 위치"                
+              /> */}
             
             <Marker
                 coordinate={{

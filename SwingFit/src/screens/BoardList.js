@@ -1,9 +1,10 @@
 import React, { useState,useEffect} from 'react';
 import styled from 'styled-components/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {StyleSheet,FlatList,Text,View,Image} from 'react-native';
-import { AntDesign,MaterialIcons,Ionicons } from '@expo/vector-icons';
-import { app,getComentLen } from '../firebase';
+import {StyleSheet,FlatList,Text,View} from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { app,getListImg} from '../firebase';
+import { Image } from '../components';
 import moment from 'moment';
 import {
     getFirestore,
@@ -96,6 +97,7 @@ const getDateOrTime = ts => {
       fontSize:21,
     },
     ImageContainer:{
+      backgroundColor:'transparent',
       width:91,
       height:89,
       borderRadius:20,
@@ -111,7 +113,7 @@ const getDateOrTime = ts => {
   const LOGO = 'https://firebasestorage.googleapis.com/v0/b/swingfit-a15ef.appspot.com/o/image_31.png?alt=media';
 
   const Item = React.memo(
-    ({ item: { CreatorId, Title, Desc, CreatedAt,Category,id }, onPress }) => {
+    ({ item: { CreatorId, Title, Desc, CreatedAt,Category,photo}, onPress}) => {
       return (
         <ItemContainer onPress={() => onPress({ CreatorId, Title })}>
           <ItemCategory>{Category}</ItemCategory>
@@ -123,12 +125,12 @@ const getDateOrTime = ts => {
               <ItemDesc>{Desc}</ItemDesc>
               <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                 <ItemTime>{getDateOrTime(CreatedAt)}  작성</ItemTime>
-                
-
               </View>
             </View>
             </ItemTextContainer>
-            <Image src={LOGO} style={stlyes.ImageContainer} ></Image>
+            <Image url={photo} styles={stlyes.ImageContainer}/>
+            
+            {/* <Image src={LOGO} style={} ></Image> */}
           </View>
         </ItemContainer>
       );
@@ -138,11 +140,10 @@ const getDateOrTime = ts => {
 const BoardList = ({ navigation }) => {
     const insets = useSafeAreaInsets();//휴대폰 창 크기
     const [board, setBoard] = useState([]);
+   
     const db = getFirestore(app);
   
     useEffect(() => {
-
-      
       const collectionQuery = query(
         collection(db, 'Board'),
         orderBy('CreatedAt', 'desc')

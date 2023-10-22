@@ -59,15 +59,15 @@ const SignUp = ({navigation}) => {
        if (refDidMount.current){ 
         let error =''; //const는 변수 재선언, 변수 재할당이 불가능 함 = let을 쓰자
         if(!name){//name이없을 때
-            error = 'Please enter your name';
+            error = '닉네임을 입력해주세요';
         }else if (!email){ //email이 없을 때
-            error = 'Please enter your email';
+            error = '이메일을 입력해주세요';
         }else if (!vaildateEmail(email)){ // email 유효성검사 false일 때
-            error = 'Please verify your email';
+            error = '유효한 이메일을 입력해주세요';
         }else if (password.length < 6){ // pasword길이가 6이하일 때
-            error = 'The password must contain 6 characters at least';
+            error = '비밀번호는 6자리 이상이여야 합니다';
         }else if (password !== passwordConfirm){ //password와 passwordconfirm이 일치하지 않을 때
-            error = 'Password need to match';
+            error = '비밀번호가 일치하지않습니다';
         }else {
             error = '';
         }
@@ -84,7 +84,7 @@ const SignUp = ({navigation}) => {
             const user = await signup({name,email,password,photo}); // firebase 회원가입 함수 실행
             setUser(user); //user에 정보저장
         }catch(e){
-            Alert.alert('SignUp Error', e.message);
+            Alert.alert('회원가입 에러', e.message);
         }finally{
             spinner.stop();//스피너 종료
         }

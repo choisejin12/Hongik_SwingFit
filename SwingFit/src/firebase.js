@@ -9,6 +9,7 @@ import {
 import { getFirestore, collection, doc, setDoc, updateDoc ,getDoc ,getDocs,onSnapshot,query,orderBy} from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import config from '../firebase.json';
+import storage from '@react-native-firebase/storage';
 
 export const app = initializeApp(config);
 
@@ -55,6 +56,27 @@ const uploadPostureImage = async uri => {
   return await getDownloadURL(storageRef);
 };
 
+const uploadBoardImage = async uri => {
+  if (uri.startsWith('https')) {
+    return uri;
+  }
+
+  const response = await fetch(uri);
+  const blob = await response.blob();
+  
+  const { uid } = auth.currentUser;
+  const storage = getStorage(app);
+  const storageRef = ref(storage, `/Board/${uid}/photo.png`);
+  
+  await uploadBytes(storageRef, blob, {
+    contentType: 'image/png',
+  });
+  
+  return await getDownloadURL(storageRef);
+};
+
+
+
 export const signup = async ({ name, email, password, photo }) => {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   const photoURL = await uploadImage(photo);
@@ -75,6 +97,12 @@ export const updateUserInfo = async photo => {
 
 export const updateUserPosture = async photo => {
   const photoURL = await uploadPostureImage(photo);
+  //await updateProfile(auth.currentUser, { photoURL });
+  return photoURL;
+};
+
+export const createUserBoardImg = async photo => {
+  const photoURL = await uploadBoardImage(photo);
   //await updateProfile(auth.currentUser, { photoURL });
   return photoURL;
 };
@@ -137,23 +165,6 @@ export const updateInformation = async (newinformation) => {
 
 };
 
-const uploadBoardImage = async uri => {
-  if (uri.startsWith('https')) {
-    return uri;
-  }
-
-  const response = await fetch(uri);
-  const blob = await response.blob();
-  
-  const { uid } = auth.currentUser;
-  const storage = getStorage(app);
-  const storageRef = ref(storage, `/Board/${uid}/photo.png`);
-  await uploadBytes(storageRef, blob, {
-    contentType: 'image/png',
-  });
-
-  return await getDownloadURL(storageRef);
-};
 
 
 export const createBoard = async ({title,Desc,category,photo}) => {
@@ -169,6 +180,7 @@ export const createBoard = async ({title,Desc,category,photo}) => {
     Category:category,
     CreatedAt: Date.now(),
     id,
+    photo,
   };
   return await setDoc(newBoardRef,newBoard);
   
@@ -211,6 +223,20 @@ export const getImg = async (userid) => {
     console.log(e);
   }
 }
+
+
+
+export const getPostureImg =  async () => {
+    try {
+      const { uid } = auth.currentUser;
+      const storage = getStorage(app);
+      const storageRef = ref(storage, `/Posture/${uid}/photo.png`);
+      const url = await getDownloadURL(storageRef);     
+      return url;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
 
 

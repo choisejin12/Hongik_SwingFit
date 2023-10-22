@@ -2,7 +2,7 @@ import React ,{useState,useContext}from 'react';
 import { StyleSheet,View ,TextInput,Text,TouchableOpacity} from 'react-native';
 import { Image } from '../components';
 import {Picker} from '@react-native-picker/picker';
-import {createBoard} from '../firebase';
+import {createBoard,createUserBoardImg} from '../firebase';
 import {ProgressContext } from '../contexts';
 
 const stlyes = StyleSheet.create({
@@ -76,6 +76,19 @@ const BoardCreation = ({navigation}) => {
         }
     }
 
+    const _handlePhotoChange = async url => {
+        try {
+            spinner.start();
+            const photoURL = await createUserBoardImg(url);
+            setphoto(photoURL);
+        } catch (e) {
+          Alert.alert('Photo Error', e.message);
+        } finally {
+            spinner.stop();
+        }
+      };
+
+
 
  
     return(
@@ -95,7 +108,7 @@ const BoardCreation = ({navigation}) => {
             </View>
 
             <View style={stlyes.inputContainer}>
-                <Image showButton={true} url={photo} onChangePhoto={setphoto}/>
+                <Image showButton={true} url={photo} onChangePhoto={_handlePhotoChange}/>
                 <TextInput 
                 style={stlyes.inputTitle} 
                 placeholder='제목을 입력해주세요.'

@@ -4,6 +4,8 @@ import { ThemeContext } from 'styled-components/native';
 import {BoardCreation,Board,Diagnosis} from '../screens';
 import Tab from './Tab';
 import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import {TouchableOpacity} from 'react-native'
 
 const Stack = createStackNavigator();
@@ -60,7 +62,29 @@ const Main = () => {
                 }
             />
 
-            <Stack.Screen name="Diagnosis" component={Diagnosis}/>
+            <Stack.Screen name="Diagnosis" component={Diagnosis}
+            options={
+                { 
+                    title:' ',
+                    headerShown : true,
+                    headerStyle:{
+                        backgroundColor:'white',
+                        height:54,
+                    },
+                    fontWeight: 'bold',
+                    headerLeft: ({onPress}) => (
+                        <TouchableOpacity onPress={onPress}>
+                            <FontAwesome name="chevron-left" size={24} color="black" marginLeft={20} />
+                        </TouchableOpacity>
+                    ),
+                    headerRight: ({onPress}) => (
+                        <TouchableOpacity onPress={onPress}>
+                            <Ionicons name="share-social-sharp" size={27} color="black" marginRight={20} />
+                        </TouchableOpacity>
+                    )
+            }
+                }
+            />
         {/* <Stack.Screen name="ChannelCreation" component={ChannelCreation}/>
         <Stack.Screen name="Channel" component={Channel}/> */}
         

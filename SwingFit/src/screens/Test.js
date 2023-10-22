@@ -106,13 +106,12 @@ const Test = ({navigation}) => {
 
       const _handleButtonPress = () =>{
         try{
-            loading.start();
-            console.log('ghihihihihiihih');
+            //loading.start();
             navigation.navigate('Diagnosis');
         }catch (e) {
             Alert.alert('Photo Error', e.message);
           } finally {
-            loading.stop();
+            //loading.stop();
           }
       }
 

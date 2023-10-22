@@ -48,7 +48,7 @@ const Signin = ({navigation}) => {
         const changedEmail = removeWhitespace(email); // removeWhitespace함수를 이용하여 공백제거
         setEmail(changedEmail);//setEmail로 공백제거한 이메일저장
         setErrorMessagee(
-            vaildateEmail(changedEmail) ? '' : 'please verify your email' // 공백제거한 이메일이 이메일양식이 맞다면 에러메세지 x , 맞지않으면 에러메시지 출력
+            vaildateEmail(changedEmail) ? '' : '유효한 이메일을 입력해주세요' // 공백제거한 이메일이 이메일양식이 맞다면 에러메세지 x , 맞지않으면 에러메시지 출력
         );
     };
 
@@ -62,7 +62,7 @@ const Signin = ({navigation}) => {
             const user = await signin({email,password}); //firebase함수 실행
             setUser(user);//setText로 user 전송 => 네비게이션 index로 user전송됨 =main스크린 띄움
         }catch(e){
-            Alert.alert('Sign Error', e.message);
+            Alert.alert('로그인 에러', e.message);
         }finally{
             spinner.stop(); // 스피너 종료
         }

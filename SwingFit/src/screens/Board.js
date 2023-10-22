@@ -161,7 +161,7 @@ const Board = ({ navigation,route }) => {
         <KeyboardAwareScrollView keyboardShouldPersistTaps="always" extraScrollHeigh={20} >
             <Container insets={insets}>
 
-            <ItemCategory>{route.params.Category}</ItemCategory>
+            <ItemCategory>{}</ItemCategory>
 
             <View style={styles.BoardProfileContainer}>
                 <Image url={Userphoto} onChangePhoto={_handlePhotoChange} styles={{width:80,height:80,
@@ -182,7 +182,7 @@ const Board = ({ navigation,route }) => {
             <View>
                 <Text style={styles.BoardTitle}>{route.params.Title}</Text>
                 <Text style={styles.BoardDesc}>{route.params.Desc}</Text>
-                <Image styles={{marginLeft:10,width:300,height:400,borderRadius:20}}  url={LOGO}/>
+                <Image styles={{marginLeft:10,width:300,height:400,borderRadius:20}}  url={route.params.photo}/>
             </View>
 
             <View style={styles.BoardComentBox}>

@@ -105,7 +105,7 @@ const user = getCurrentUser();
             안녕하세요.              
         </StyledText>
         <Text style={{position:'absolute',top:130,fontSize:36,fontWeight:'bold',left:40}}><Text style={{color:"#30B465",}}>{user.name}</Text> 회원님!</Text>
-        <View style={styles.Home_Information}>
+        <TouchableOpacity style={styles.Home_Information} onPress={() => {navigation.navigate('Diagnosis')}}>
             <View style={styles.Home_Information_Left}>
                  <FontAwesome name="arrow-right" size={65} color="white" marginLeft={50} marginTop={26} />
             </View>
@@ -114,7 +114,7 @@ const user = getCurrentUser();
                 <Text  style={{fontWeight:600,}}><Text style={{color:"#0075FF", fontSize:16, }}>자세</Text>를 <Text style={{color:"#0075FF",  fontSize:16}}>확인</Text>하고 싶으신가요?</Text>
                 <Text style={{color:"black", opacity:0.5, fontSize:9, paddingLeft:10,paddingTop:5}}>지금 바로 확인하고 교정하러 가보세요!</Text>
             </View>
-        </View> 
+        </TouchableOpacity> 
 
     </View>
     <TouchableOpacity  style={styles.Home_mypage} onPress={() => {navigation.navigate('Profile')}}>

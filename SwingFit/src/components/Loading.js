@@ -5,7 +5,7 @@ import {Text,View,StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
     Container:{
         alignItems:'center',
-        paddingTop:110,
+        paddingTop:130,
     },
     MainText:{
         fontSize:50,
