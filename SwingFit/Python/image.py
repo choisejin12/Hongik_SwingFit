@@ -58,16 +58,23 @@ blob.upload_from_filename(Outputdestination_file_name)
 print(auth.UserInfo)
 
 data = [
-    {"olivia" : {
-        "gender": "female",
-        "age" : 25,
-        "hobby" : ["reading", "music"]
+    {
+    "세진": 
+        {
+            "id": "m1bBDo3hbYZ40G4n8IeHGnOYt923",
+            "doc_id" : "T7NN5tHEQtDnOMZlhgGG",
+            "score": 6, 
+            "problem": ["임팩트헤드업", "탑 하체 무너짐"]
         }
+
     },
-    {"Tyler" : {
-        "gender": "male",
-        "age" : 28,
-        "hobby" : ["development", "painting"]
+    {
+    "지우": 
+        {
+            "id": "m1bBDo3hbYZ40G4n8IeHGnOYt923",
+            "doc_id" : "T7NN5tHEQtDnOMZlhgGG",
+            "score": 3, 
+            "problem": ["임팩트헤드업", "탑 하체 무너짐"]
         }
     }
 ]
