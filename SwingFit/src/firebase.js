@@ -229,7 +229,7 @@ export const getPostureImg =  async () => {
     try {
       const { uid } = auth.currentUser;
       const storage = getStorage(app);
-      const storageRef = ref(storage, `/Posture/${uid}/photo.png`);
+      const storageRef = ref(storage, `/OutputPosture/${uid}/Outputposture.png`);
       const url = await getDownloadURL(storageRef);     
       return url;
     } catch (e) {

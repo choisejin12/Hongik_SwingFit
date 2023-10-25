@@ -86,7 +86,7 @@ const styles = StyleSheet.create(
 
 const Test = ({navigation}) => {
     const LOGO = 'https://firebasestorage.googleapis.com/v0/b/swingfit-a15ef.appspot.com/o/loading_1.png?alt=media';
-    const [photo,setPhoto] = useState('');
+    const [photo,setPhoto] = useState('f');
     const { spinner } = useContext(ProgressContext);
     const { loading } = useContext(LoadingContext);
     const [inable,setInable] = useState(false);

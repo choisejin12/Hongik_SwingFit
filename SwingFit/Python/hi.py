@@ -5,7 +5,7 @@ from firebase_admin import firestore
 import json
 
 #서비스어카운트키 파일에 있는 json을 불러옴
-cred = credentials.Certificate("./mykey.json")
+cred = credentials.Certificate("C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/mykey.json")
 firebase_admin.initialize_app(cred)
 firebase_db = firestore.client()
 
@@ -15,13 +15,9 @@ app = Flask(__name__)
 @app.route("/add", methods=['GET'])
 def start():
 	# firestore에 올릴 json 파일 불러드림
-    with open('./stock_code.json', encoding='utf-8') as f:
+    with open('C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/stock_code.json', encoding='utf-8') as f:
         datas = json.load(f)
         
-    # 아래는 테스트를 해보기 위한 데이터
-    # datas = [{'name': '당근','code': '012345'},{'name': '오이','code': '012341'}]
-    # print(datas)
-
     for data in datas:
     	# document() 라고 하면 자동으로 다큐먼트의 ID가 생성됨. 
         document = firebase_db.collection('Score').document()

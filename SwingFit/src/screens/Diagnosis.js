@@ -37,6 +37,7 @@ const styles = StyleSheet.create(
         },
         DiagnosisBox:{
             marginTop:30,
+            
 
         },
         DiagnosisDesc:{
@@ -49,7 +50,8 @@ const styles = StyleSheet.create(
         },
         DiagnosisImg:{
             width:'100%',
-            height:600,
+            height:400,
+            
         },
         styleProfileProblemDiv:
         {
