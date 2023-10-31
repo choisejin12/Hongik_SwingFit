@@ -58,7 +58,7 @@ const getDateOrTime = ts => {
   `;
 
   const ItemTitle = styled.Text`
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
     line-height: 30px;
     margin-left: 5px;

@@ -50,7 +50,7 @@ const styles = StyleSheet.create(
         },
         DiagnosisImg:{
             width:'100%',
-            height:400,
+            height:300,
             
         },
         styleProfileProblemDiv:
