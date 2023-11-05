@@ -7,6 +7,7 @@ import { getPostureImg } from '../firebase';
 
 
 
+
 const ShareBox = styled.Text`
        position:absolute;
        background-color:#0B1144;
@@ -103,7 +104,6 @@ const styles = StyleSheet.create(
         },
         YoutubeBox:{
             backgroundColor:'#F4F4F4',
-            
             width:'100%',
             height:200
         }
@@ -114,6 +114,7 @@ const styles = StyleSheet.create(
 
 const Diagnosis = ({navigation}) => {
     const [photo,setPhoto] = useState('f');
+    
 
     useEffect(() => {
         async function fetchAndSetUser() { 1
@@ -122,9 +123,6 @@ const Diagnosis = ({navigation}) => {
            }
            fetchAndSetUser(); 
     },[]);
-
-   
-
 
 
     return(

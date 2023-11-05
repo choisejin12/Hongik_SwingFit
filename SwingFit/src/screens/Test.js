@@ -3,6 +3,7 @@ import {TestImage,CustomSwitch} from '../components';
 import {View,TouchableOpacity,Text,StyleSheet} from 'react-native';
 import { ProgressContext,LoadingContext} from '../contexts';
 import {updateUserPosture} from '../firebase';
+import axios from 'axios';
 
 
 const styles = StyleSheet.create(
@@ -90,6 +91,7 @@ const Test = ({navigation}) => {
     const { spinner } = useContext(ProgressContext);
     const { loading } = useContext(LoadingContext);
     const [inable,setInable] = useState(false);
+    
 
     const _handlePhotoChange = async url => {
         try {
@@ -104,16 +106,29 @@ const Test = ({navigation}) => {
         }
       };
 
-      const _handleButtonPress = () =>{
+      const _handleButtonPress =  () =>{
         try{
-            //loading.start();
+            
+            axios.get('http://10.0.2.2:5000/add');
+            spinner.start();
             navigation.navigate('Diagnosis');
         }catch (e) {
+            const error =  e;
+            console.log(error);
             Alert.alert('Photo Error', e.message);
+            return err;
           } finally {
-            //loading.stop();
+            spinner.stop();
           }
       }
+
+      axios.get('/add')
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
 
 
