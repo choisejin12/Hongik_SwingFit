@@ -71,7 +71,7 @@ if results.pose_landmarks:
     }
 
     # Save data to a JSON file
-    json_filename = "one.json"
+    json_filename = "landmark.json"
     with open(json_filename, 'w+', encoding='utf-8') as json_file:
         json.dump(json_data, json_file, indent=4)
 

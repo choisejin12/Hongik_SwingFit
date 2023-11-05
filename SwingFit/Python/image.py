@@ -3,6 +3,7 @@ import mediapipe as mp
 from firebase_admin import credentials , initialize_app , storage , storage , firestore ,auth
 import json
 from flask import Flask
+import subprocess
 
 
 app = Flask(__name__)
@@ -33,9 +34,6 @@ def start():
 
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    # 중간 지점 좌표를 저장할 리스트를 생성합니다.
-    midpoint_coordinates = []
-
     cv2.namedWindow("포즈 이미지", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("포즈 이미지", 960, 540)
 
@@ -58,30 +56,23 @@ def start():
             # 중간 지점의 좌표를 얻습니다.
             landmarks = results.pose_landmarks.landmark
             midpoints = [(landmarks[i].x + landmarks[j].x, landmarks[i].y + landmarks[j].y)
-                        for i, j in [(7, 8), (11, 12), (23, 24), (23, 25), (24, 26), (29, 31), (30, 32)]]
+                        for i, j in [(7, 8), (11, 12), (23, 24), (23, 25), (24, 26)]]
 
             for x, y in midpoints:
                 h, w, c = image.shape
                 x, y = int(x * w / 2), int(y * h / 2)
                 # 중간 지점을 점으로 그리고 좌표를 리스트에 추가합니다.
                 cv2.circle(image, (x, y), 5, (0, 0, 255), -1)
-                midpoint_coordinates.append((x, y))
 
         cv2.imshow("포즈 이미지", image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-        if results.pose_landmarks:
-            for idx, landmark in enumerate(results.pose_landmarks.landmark):
-                h, w, c = image.shape
-                cx, cy = int(landmark.x * w), int(landmark.y * h)
-                print(f"랜드마크 {idx}: X={cx}, Y={cy}")
-
-    # 중간 지점 좌표를 출력합니다.
-    for idx, (x, y) in enumerate(midpoint_coordinates):
-        print(f"중간 지점 {idx}: X={x}, Y={y}")
-
     cv2.imwrite("SwingFit\Python\outputimg\output_image.png", image)
+
+    subprocess.run(["python", "get.py"])
+    subprocess.run(["python", "calc.py"])
+    subprocess.run(["python", "model.py"])
 
     # 측정 완료한 이미지 파이어베이스 서버에 저장하기
     Outputsource_blob_name = "Outputposture.png"
