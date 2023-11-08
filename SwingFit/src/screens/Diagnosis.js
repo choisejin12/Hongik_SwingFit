@@ -1,11 +1,17 @@
 import React , {useState,useEffect} from 'react';
+import { initializeApp } from 'firebase/app';
 import {View,Text,StyleSheet,} from 'react-native';
 import styled from 'styled-components/native';
 import { KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Image} from '../components';
-import { getPostureImg } from '../firebase';
-
-
+import { getPostureImg , getCurrentUser} from '../firebase';
+import { app } from '../firebase';
+import {
+    collection,
+    query,
+    getFirestore,
+    onSnapshot,
+  } from 'firebase/firestore';
 
 
 const ShareBox = styled.Text`
@@ -114,6 +120,10 @@ const styles = StyleSheet.create(
 
 const Diagnosis = ({navigation}) => {
     const [photo,setPhoto] = useState('f');
+    const [score,setScore] = useState();
+    const [feedBack,setFeedBack] = useState([]);
+    const db = getFirestore(app);
+    const user = getCurrentUser();
     
 
     useEffect(() => {
@@ -121,8 +131,48 @@ const Diagnosis = ({navigation}) => {
             const url = await getPostureImg();
             setPhoto(url);
            }
-           fetchAndSetUser(); 
+            fetchAndSetUser();
+
+            const collectionQuery = query(
+                collection(db, 'Score')
+            );
+            const unsubscribe = onSnapshot(collectionQuery, snapshot => {
+                snapshot.forEach(doc => {
+                  if(doc.data().CreatorId == user.uid){
+                    // console.log(doc.data().fit)
+                    setScore(doc.data().score);
+                    setFeedBack(doc.data().fit);
+                  }
+                  else{
+                    
+                  }
+                });
+            });
+
+            // console.log('score',score, 'feedback',feedBack);
+            return () => unsubscribe();
+        
     },[]);
+
+
+    // useEffect(() => {
+    //     const docRef = doc(db, 'Board', route.params.id);
+    //     const userid = route.params.CreatorId;
+    //     const profileimgurl = getImg(userid);
+    //     setPhoto(profileimgurl._j);
+    //     const collectionQuery = query(
+    //       collection(db, `${docRef.path}/Comments`),
+    //       orderBy('CreatedAt', 'desc')
+    //     );
+    //     const unsubscribe = onSnapshot(collectionQuery, snapshot => {
+    //       const list = [];
+    //       snapshot.forEach(doc => {
+    //         list.push(doc.data());
+    //       });
+    //       setComent(list);
+    //     });
+    //     return () => unsubscribe();
+    //   }, []);
 
 
     return(
@@ -135,7 +185,7 @@ const Diagnosis = ({navigation}) => {
 
             <View style={styles.ScoreBox}>
                     <Text style={{fontWeight:'bold', fontSize:14}}>나의 스윙 점수</Text>
-                    <Text style={{fontWeight:'bold',fontSize:19,color:'#959595'}}><Text style={{fontSize:48,color:'#30B465'}}>6.7</Text>/10</Text>
+                    <Text style={{fontWeight:'bold',fontSize:19,color:'#959595'}}><Text style={{fontSize:48,color:'#30B465'}}>{score}</Text>/10</Text>
                     <View style={styles.ScoreDesc}>
                         <Text style={{color:'#7F7F7F'}}>사진을 보고 확인해주세요.</Text>
                     </View>

@@ -250,7 +250,7 @@ const Profile = () => {
                 <Octicons name="graph" size={16} color="black" marginBottom={10} paddingTop={10} marginRight={5} />
                 <Text>스윙 평균 점수</Text>
               </View>
-              <Text><Text style={{fontWeight:700}}>450</Text> 타</Text> 
+              <Text><Text style={{fontWeight:700}}>7</Text> 점</Text> 
               {/*서버에서 불러와야 함 */}
             </View>
             <View style={styles.styleProfileEvScoreContainer}>
@@ -258,7 +258,7 @@ const Profile = () => {
                 <FontAwesome5 name="award" size={16} color="black" marginBottom={10} paddingTop={10} marginRight={5} />
                 <Text>스윙 최고 점수</Text>
               </View>
-              <Text><Text style={{fontWeight:700}}>520</Text> 타</Text> 
+              <Text><Text style={{fontWeight:700}}>10</Text>점</Text> 
               {/*서버에서 불러와야 함 */}
             </View>
             <View style={styles.styleProfileProblembContainer}>

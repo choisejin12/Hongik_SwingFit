@@ -2,11 +2,11 @@ import json
 import numpy as np
 import tensorflow as tf
 
-with open('describe_result.json', 'r') as json_file:
+with open('C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/describe_result.json', 'r') as json_file:
     describe_result = json.load(json_file)
 
 # JSON 파일을 읽어와서 데이터 파싱
-with open('result.json', 'r') as json_file:
+with open('C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/result.json', 'r') as json_file:
     data = json.load(json_file)
 
 # JSON 데이터에서 필요한 값을 추출
@@ -49,39 +49,44 @@ if elbow_shoulder < ranges['elbow_shoulder'][0]:
 elif elbow_shoulder > ranges['elbow_shoulder'][1]:
     out_of_range_messages.append("팔을 안쪽으로 더 당기십시오.")
 
-# 이제 추출한 값을 NumPy 배열로 변환
-input_data = np.array([head_chest, chest_hip, heel_ham, elbow_shoulder])
+# # 이제 추출한 값을 NumPy 배열로 변환
+# input_data = np.array([head_chest, chest_hip, heel_ham, elbow_shoulder])
 
-# 모델 불러오기
-model = tf.keras.models.load_model('./model/my_model.h5')  # 모델 파일명을 수정해야 합니다
+# # 모델 불러오기
+# model = tf.keras.models.load_model('C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/model/my_model.h5')  # 모델 파일명을 수정해야 합니다
 
-# 모델을 사용하여 예측
-result = model.predict(input_data.reshape(1, -1))  # 입력 데이터를 모델의 입력 형식에 맞게 변환하여 예측
+# # 모델을 사용하여 예측
+# result = model.predict(input_data.reshape(1, -1))  # 입력 데이터를 모델의 입력 형식에 맞게 변환하여 예측
 
-class_mapping = {'bad': 0, 'normal': 1, 'good': 2, 'best': 3}
+# class_mapping = {'bad': 0, 'normal': 1, 'good': 2, 'best': 3}
 
-predicted_classes = np.argmax(result, axis=1)
+# predicted_classes = np.argmax(result, axis=1)
 
-eval = []
-for idx in predicted_classes:
-    if idx == 0:
-        eval.append('bad')
-    elif idx == 1:
-        eval.append('normal')
-    elif idx == 2:
-        eval.append('good')
-    elif idx == 3:
-        eval.append('best')
+dot_count = 0
+for message in out_of_range_messages:
+    dot_count += message.count('.')
+
+# eval 값을 설정
+if dot_count == 0:
+    eval = 10
+elif dot_count == 1:
+    eval = 7
+elif dot_count == 2:
+    eval = 5
+elif dot_count == 3:
+    eval = 2
+elif dot_count == 4:
+    eval = 0
 
 # 예측 결과 출력
 print("Evaluation:", eval)
 print(out_of_range_messages)
 
-result_data = {
-    "eval": eval,
+result_data = [{
+    "score": eval,
     "fit": out_of_range_messages
-}
+}]
 
 # JSON 파일에 저장
-with open('eval_fit.json', 'w', encoding='utf-8') as json_file:
-    json.dump(result_data, json_file, ensure_ascii=False)
+with open('C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/eval_fit.json', 'w', encoding='utf-8') as json_file:
+    json.dump(result_data, json_file)

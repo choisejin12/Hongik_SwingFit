@@ -6,6 +6,8 @@ import Navigation from './navigations';
 import { UserProvider, ProgressProvider,StartProvider,LoadingProvider} from './contexts';
 
 const App = () => {
+    
+
     return (
         <ThemeProvider theme={theme}>
             <LoadingProvider>

@@ -1,10 +1,27 @@
 import cv2
 import mediapipe as mp
+from firebase_admin import credentials , initialize_app , storage , storage , firestore ,auth
 import os
 import json
 
 # Load the image
-image_filename = './image/20200803_General_013_DOC_P_F20_MM_014_0384.jpg'
+#파이어베이스에서 이미지 가져오기
+cred = credentials.Certificate("C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/mykey.json")
+initialize_app(cred, {
+    'databaseURL' : 'https:SwingFit.firebaseio.com/',
+    'storageBucket': 'swingfit-a15ef.appspot.com'
+})
+
+
+source_blob_name = "photo.png"
+destination_file_name="C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/image/imgposture.png"
+
+bucket = storage.bucket()
+blob = bucket.blob('Posture/m1bBDo3hbYZ40G4n8IeHGnOYt923/'+ source_blob_name) 
+blob.download_to_filename(destination_file_name)
+
+
+image_filename = 'SwingFit\Python\image\imgposture.png'
 image = cv2.imread(image_filename)
 
 # Create a Pose model
@@ -71,7 +88,7 @@ if results.pose_landmarks:
     }
 
     # Save data to a JSON file
-    json_filename = "landmark.json"
+    json_filename = "C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/landmark.json"
     with open(json_filename, 'w+', encoding='utf-8') as json_file:
         json.dump(json_data, json_file, indent=4)
 

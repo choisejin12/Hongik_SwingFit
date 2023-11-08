@@ -23,10 +23,10 @@ def start():
     destination_file_name="C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/image/imgposture.png"
 
     bucket = storage.bucket()
-    blob = bucket.blob('Posture/m1bBDo3hbYZ40G4n8IeHGnOYt923/'+ source_blob_name) #아이디부분 서버에서 가져와야함
+    blob = bucket.blob('Posture/UUvbdSMa9RQOmgeLZDhkXAVxi5e2/'+ source_blob_name) 
     blob.download_to_filename(destination_file_name)
 
-    # 가져온 이미지의 자세 측정하기
+    # 가져온 이미지의 파이프라인 그리기
     image = cv2.imread('SwingFit\Python\image\imgposture.png')
 
     mp_pose = mp.solutions.pose
@@ -42,7 +42,7 @@ def start():
 
         if results.pose_landmarks:
             mp.solutions.drawing_utils.draw_landmarks(image, results.pose_landmarks)
-            # 파이프라인 그리기
+            
             mp.solutions.drawing_utils.draw_landmarks(
                 image,
                 results.pose_landmarks,
@@ -70,58 +70,26 @@ def start():
 
     cv2.imwrite("SwingFit\Python\outputimg\output_image.png", image)
 
-    subprocess.run(["python", "get.py"])
-    subprocess.run(["python", "calc.py"])
-    subprocess.run(["python", "model.py"])
+    subprocess.run(["python", "SwingFit\Python\get.py"])
+    subprocess.run(["python", "SwingFit\Python\calc.py"])
+    subprocess.run(["python", "SwingFit\Python\model.py"])
 
     # 측정 완료한 이미지 파이어베이스 서버에 저장하기
     Outputsource_blob_name = "Outputposture.png"
     Outputdestination_file_name="C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/outputimg/output_image.png"
-    blob = bucket.blob('OutputPosture/m1bBDo3hbYZ40G4n8IeHGnOYt923/'+ Outputsource_blob_name)  #아이디부분 서버에서 가져와야함
+    blob = bucket.blob('OutputPosture/UUvbdSMa9RQOmgeLZDhkXAVxi5e2/'+ Outputsource_blob_name)  #아이디부분 서버에서 가져와야함
     blob.upload_from_filename(Outputdestination_file_name) 
 
     print(auth.UserInfo)
 
-    data = [
-        {
-        "세진": 
-            {
-                "id": "m1bBDo3hbYZ40G4n8IeHGnOYt923",
-                "doc_id" : "T7NN5tHEQtDnOMZlhgGG",
-                "score": 6, 
-                "problem": ["임팩트헤드업", "탑 하체 무너짐"]
-            }
-
-        },
-        {
-        "지우": 
-            {
-                "id": "m1bBDo3hbYZ40G4n8IeHGnOYt923",
-                "doc_id" : "T7NN5tHEQtDnOMZlhgGG",
-                "score": 3, 
-                "problem": ["임팩트헤드업", "탑 하체 무너짐"]
-            }
-        }
-    ]
-
-    file_path = "C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/result/test.json"
-
-    with open(file_path, 'w', encoding='utf-8') as file:
-        json.dump(data, file)
-
-
-
     firebase_db = firestore.client()
 
-
-    
-
-
 	# firestore에 올릴 json 파일 부름
-    with open('C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/result/test.json', encoding='utf-8') as f:
+    with open('C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/eval_fit.json', encoding='utf-8') as f:
         datas = json.load(f)
         
     for data in datas:
+        
     	# document() 라고 하면 자동으로 다큐먼트의 ID가 생성됨. 
         document = firebase_db.collection('Score').document()
         document.set(data)

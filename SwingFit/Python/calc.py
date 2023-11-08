@@ -1,7 +1,7 @@
 import json
 
 # JSON 파일 로드
-json_filename = "landmark.json"  # JSON 파일의 경로와 이름을 지정하세요
+json_filename = "C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/landmark.json"  # JSON 파일의 경로와 이름을 지정하세요
 with open(json_filename, 'r') as json_file:
     data = json.load(json_file)
 
@@ -16,7 +16,7 @@ elbow_shoulder = landmarks[13]["X"] - landmarks[11]["X"]
 result = {"head_chest": head_chest, "chest_hip": chest_hip, "heel-ham": heel_ham, "elbow-shoulder": elbow_shoulder}
 
     # JSON 파일로 저장
-json_filename = "result.json"
+json_filename = "C:/Users/RENTALHUB/Documents/GitHub/Hongik_SwingFit/SwingFit/Python/result.json"
 with open(json_filename, 'w+', encoding='utf-8') as json_file:
     json.dump(result, json_file, indent=4)
 
