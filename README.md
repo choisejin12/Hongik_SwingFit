@@ -94,3 +94,15 @@ uploadImage함수를 만들어서 공통적으로 사용하게 함
 ## 기획 & 설계
 
 🌻[디자인](https://www.figma.com/file/WzQzsCube1dBDlEMVt79JY/%EC%A2%85%EC%84%A4?type=design&node-id=0%3A1&mode=design&t=CbWtIvOrq5WgZDwP-1)
+
+## 담당역할 및 성과
+
+- **나의 역할** 
+1. ReactNative와 Expo를 이용하여 **앱의 모든 화면**을 구성하였다 (FrontEnd)
+2. Firebase를 이용하여 회원가입,로그인,로그아웃과 게시글과 댓글 작성 및 페이징 기능 그리고 소개말 등록 등
+알고리즘 제외 **BackEnd를 구성**하였다.
+3. 앱의 디자인을 담당하였다. **(UI/UX 제작)**
+
+- **성과**
+
+  🎇 실제 구현한 앱 디자인이 거의 유사한 것 같아서 뿌듯하지만 초기에 기획했던, 현재 위치를 불러와서 주변 골프장의 정보를 나타내주는 기능을 수행하지 못함
