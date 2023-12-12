@@ -81,7 +81,7 @@ uploadImage함수를 만들어서 공통적으로 사용하게 함
 
 ## 기술 스택
 
-- **FrontEnd** : React Native
+- **FrontEnd** : React Native , Expo
 - **BackEnd** : Firebase
 - **Algorithm** : OpenCV , MediaPipe
 
