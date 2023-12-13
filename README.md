@@ -11,6 +11,10 @@
 ## 시현 영상 
 
 
+https://github.com/choisejin12/Hongik_SwingFit/assets/76937151/c89f58ef-295c-4b02-a37f-761f96d53ae2
+
+
+
 ## 주요 화면 및 기능
 
 ❗  **화 면**
